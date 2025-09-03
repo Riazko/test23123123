@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: kronos_backend
+    env_file:
+      - .env # Подключаем файл с переменными окружения
+    volumes:
+      - ./KONFETA.db:/app/KONFETA.db # Пробрасываем базу данных, чтобы она не терялась
+    command: uvicorn App.main:app --host 0.0.0.0 --port 8000
+
+  nginx:
+    image: nginx:alpine
+    container_name: kronos_nginx
+    ports:
+      - "80:80" # Открываем 80 порт для доступа из браузера
+    volumes:
+      - ./front:/var/www/html # Монтируем папку front как корневую для Nginx
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf # Пробрасываем конфиг Nginx
+    depends_on:
+      - backend # Nginx запустится только после старта бэкенда

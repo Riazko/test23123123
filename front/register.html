@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Секция регистрации -->
+        <section id="register-section">
+            <h2>Регистрация</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-login">Логин:</label>
+                    <input type="text" id="reg-login" name="login" required minlength="3" maxlength="32">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Пароль:</label>
+                    <input type="password" id="reg-password" name="password" required minlength="6" maxlength="128">
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email:</label>
+                    <input type="email" id="reg-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-group-name">Название группы:</label>
+                    <input type="text" id="reg-group-name" name="name" required minlength="1" maxlength="64">
+                </div>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+            <p id="register-result" class="result"></p>
+            <p class="switch-form">
+                Уже есть аккаунт? <a href="#" id="to-login">Войти</a>
+            </p>
+        </section>
+
+        <!-- Секция входа -->
+        <section id="login-section" class="hidden">
+            <h2>Вход</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-login">Логин:</label>
+                    <input type="text" id="login-login" name="login" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Пароль:</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit">Войти</button>
+            </form>
+            <p id="login-result" class="result"></p>
+            <p class="switch-form">
+                Нет аккаунта? <a href="#" id="to-register">Зарегистрироваться</a>
+            </p>
+        </section>
+
+        <!-- Секция профиля -->
+        <section id="profile" class="hidden">
+            <h2>Ваш профиль</h2>
+            <pre id="profile-json"></pre>
+            <button id="logout">Выйти</button>
+        </section>
+    </div>
+
+    <script>
+        // Определяем базовый URL для API
+        window.API_BASE = 'http://127.0.0.1:8000';
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>

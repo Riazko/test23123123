@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта кампуса УРФУ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-map-marked-alt"></i> Карта кампуса УРФУ</h1>
+        <p class="description">Отсканируйте QR-коды в разных зонах кампуса, чтобы раскрасить карту. Все посещенные зоны останутся раскрашенными.</p>
+    </div>
+    
+    <div class="content">
+        <div class="map-container">
+            <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Зона 1 -->
+                <g id="zone1" class="zone" style="cursor: pointer;">
+                    <!-- Нижний слой (виден по умолчанию) - теперь это zona1.png -->
+                    <image class="zone-background" href="zona1.png" x="103" y="146" width="300" height="210" />
+                    <!-- Верхний слой (появляется при сканировании) - теперь это zona11.png -->
+                    <image class="zone-image" href="zona11.png" x="103" y="146" width="300" height="210" />
+                </g>
+                <!-- Зона 2 -->
+                <g id="zone2" class="zone" style="cursor: pointer;">
+                    <!-- Нижний слой (виден по умолчанию) -->
+                    <image class="zone-background" href="zona2.png" x="320" y="80" width="300" height="210" />
+                    <!-- Верхний слой (появляется при сканировании) -->
+                    <image class="zone-image" href="zona22.png" x="320" y="80" width="300" height="210" />
+                </g>
+                <!-- Зона 3 -->
+                <g id="zone3" class="zone" style="cursor: pointer;">
+                    <!-- Нижний слой (виден по умолчанию) -->
+                    <image class="zone-background" href="zona3.png" x="556" y="108" width="200" height="120" />
+                    <!-- Верхний слой (появляется при сканировании) -->
+                    <image class="zone-image" href="zona33.png" x="556" y="108" width="200" height="120" />
+                </g>
+                <!-- Зона 4 -->
+                <g id="zone4" class="zone" style="cursor: pointer;">
+                    <!-- Нижний слой (виден по умолчанию) -->
+                    <image class="zone-background" href="zona4.png" x="220" y="200" width="200" height="190" />
+                    <!-- Верхний слой (появляется при сканировании) -->
+                    <image class="zone-image" href="zona44.png" x="220" y="200" width="200" height="190" />
+                </g>
+                <!-- Зона 5 -->
+                <g id="zone5" class="zone" style="cursor: pointer;">
+                    <!-- Нижний слой (виден по умолчанию) -->
+                    <image class="zone-background" href="zona5.png" x="499" y="213" width="200" height="75" />
+                    <!-- Верхний слой (появляется при сканировании) -->
+                    <image class="zone-image" href="zona55.png" x="499" y="213" width="200" height="75" />
+                </g>
+            </svg>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #FF6B6B;"></div>
+                    <span>Зона 1</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #4ECDC4;"></div>
+                    <span>Зона 2</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #FFE66D;"></div>
+                    <span>Зона 3</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #9b59b6;"></div>
+                    <span>Зона 4</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #2ecc71;"></div>
+                    <span>Зона 5</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <h3><i class="fas fa-qrcode"></i> Симулятор сканирования QR-кодов</h3>
+            <p>Нажмите на кнопку, чтобы имитировать сканирование QR-кода в соответствующей зоне</p>
+            
+            <div class="qr-simulator">
+                <button class="qr-btn" data-zone="1"><i class="fas fa-qrcode"></i> QR-код Зоны 1</button>
+                <button class="qr-btn" data-zone="2"><i class="fas fa-qrcode"></i> QR-код Зоны 2</button>
+                <button class="qr-btn" data-zone="3"><i class="fas fa-qrcode"></i> QR-код Зоны 3</button>
+                <button class="qr-btn" data-zone="4"><i class="fas fa-qrcode"></i> QR-код Зоны 4</button>
+                <button class="qr-btn" data-zone="5"><i class="fas fa-qrcode"></i> QR-код Зоны 5</button>
+            </div>
+            
+            <div class="completion-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <div class="status" id="status">
+                <i class="fas fa-info-circle"></i> Статус: Ни одна зона еще не посещена
+            </div>
+            
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Зона успешно добавлена! Все предыдущие зоны сохранены.
+            </div>
+            
+            <button class="reset-btn" id="resetBtn">
+                <i class="fas fa-redo"></i> Сбросить прогресс
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Карта кампуса УРФУ | Проект с системой QR-кодов</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const zones = document.querySelectorAll('.zone');
+            const statusElement = document.getElementById('status');
+            const resetBtn = document.getElementById('resetBtn');
+            const progressBar = document.getElementById('progressBar');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Загрузка состояния из localStorage
+            loadProgress();
+            updateStatus();
+            
+            // Обработка параметров url (должна быть после загрузки состояния)
+            processUrlParameters();
+            
+            // Обработчики для кнопок симуляции qr-кодов
+            document.querySelectorAll('.qr-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const zoneId = this.getAttribute('data-zone');
+                    scanQRCode(zoneId);
+                });
+            });
+            
+            // Обработчик для сброса прогресса
+            resetBtn.addEventListener('click', function() {
+                localStorage.removeItem('visitedZones');
+                zones.forEach(zone => {
+                    zone.classList.remove('scanned');
+                    zone.classList.remove('pulse');
+                });
+                updateStatus();
+                
+                // Анимация сброса
+                this.classList.add('pulse');
+                setTimeout(() => {
+                    this.classList.remove('pulse');
+                }, 1500);
+            });
+            
+            // Функция обработки параметров url
+            function processUrlParameters() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const zoneParam = urlParams.get('zone');
+                
+                if (zoneParam) {
+                    // Если в url есть параметр zone, добавляем зону к посещенным
+                    addZoneToVisited(zoneParam);
+                    
+                    // Показываем сообщение об успехе
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                    
+                    // Обновляем url без параметров
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
+            
+            // Функция добавления зоны к посещенным
+            function addZoneToVisited(zoneId) {
+                // Получаем текущий список посещенных зон
+                let visitedZones = JSON.parse(localStorage.getItem('visitedZones')) || [];
+                
+                // Если зона еще не посещена, добавляем ее в список
+                if (!visitedZones.includes(zoneId)) {
+                    visitedZones.push(zoneId);
+                    localStorage.setItem('visitedZones', JSON.stringify(visitedZones));
+                    
+                    // Анимация для новой зоны
+                    const zoneElement = document.getElementById('zone' + zoneId);
+                    if (zoneElement) {
+                        zoneElement.classList.add('pulse');
+                        setTimeout(() => {
+                            zoneElement.classList.remove('pulse');
+                        }, 1500);
+                    }
+                }
+                
+                // Обновляем внешний вид всех посещенных зон
+                updateZonesAppearance();
+                updateStatus();
+            }
+            
+            // Псевдо сканирование qr-кода
+            function scanQRCode(zoneId) {
+                addZoneToVisited(zoneId);
+            }
+            
+            // Загрузка прогресса из localStorage
+            function loadProgress() {
+                const visitedZones = JSON.parse(localStorage.getItem('visitedZones')) || [];
+                visitedZones.forEach(zoneId => {
+                    const zoneElement = document.getElementById('zone' + zoneId);
+                    if (zoneElement) {
+                        zoneElement.classList.add('scanned');
+                    }
+                });
+            }
+            
+            // Обновление внешнего вида зон на основе сохраненных данных
+            function updateZonesAppearance() {
+                const visitedZones = JSON.parse(localStorage.getItem('visitedZones')) || [];
+                
+                zones.forEach(zone => {
+                    const zoneId = zone.id.replace('zone', '');
+                    if (visitedZones.includes(zoneId)) {
+                        zone.classList.add('scanned');
+                    } else {
+                        zone.classList.remove('scanned');
+                    }
+                });
+            }
+            
+            // Обновление статуса
+            function updateStatus() {
+                const visitedZones = JSON.parse(localStorage.getItem('visitedZones')) || [];
+                const totalZones = 5;
+                const percentage = (visitedZones.length / totalZones) * 100;
+                
+                progressBar.style.width = percentage + '%';
+                
+                if (visitedZones.length === 0) {
+                    statusElement.innerHTML = '<i class="fas fa-info-circle"></i> Статус: Ни одна зона еще не посещена';
+                } else {
+                    statusElement.innerHTML = `<i class="fas fa-info-circle"></i> Статус: Посещено зон: ${visitedZones.length}/${totalZones}`;
+                    
+                    // Если все зоны посещены
+                    if (visitedZones.length === totalZones) {
+                        statusElement.innerHTML += ' <i class="fas fa-trophy"></i>';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
